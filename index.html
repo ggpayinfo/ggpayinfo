@@ -57,10 +57,22 @@
     </script>
     <script src="/search.js"></script>
     <script>
-    
+      
       $(document).ready(function(){
+        let currentMarkers = new Array();
         $("#search").click(function(){
-          Search("보정동","카페");
+          const location = $("#location").val();
+          const storeName = $("#storeName").val();
+          Search(location,storeName,function(data){
+            data.RegionMnyFacltStus[1].row.forEach(function(value,index,array){
+              console.log(value.CMPNM_NM);
+            });
+            let center = SetMarkers(map,data.RegionMnyFacltStus[1].row,currentMarkers);
+            
+            map.setCenter(new kakao.maps.LatLng(center.Lat, center.Logt));
+            map.setLevel(4);
+            
+          });
         });
       });
 
