@@ -1,81 +1,118 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="css/style.css">
-    <title>Hello, world!</title>
-  </head>
-  <body>
-    <div class="container">
-        <header>
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <a class="navbar-brand" href="#">경기지역화폐 지도</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                  <span class="navbar-toggler-icon"></span>
-                </button>
-                <form class="form-inline my-2 my-lg-0">
-                    <nav class="navbar navbar-light bg-light">
-                        <span class="navbar-text">
-                          지역 명
-                        </span>
-                    </nav>
-                    <input id = "location" class="form-control mr-sm-2" type="search" placeholder="보정동" aria-label="Search">
-                    <nav class="navbar navbar-light bg-light">
-                        <span class="navbar-text">
-                          상호명
-                        </span>
-                    </nav>                    
-                    <input id = "storeName" class="form-control mr-sm-2" type="search" placeholder="연안식당" aria-label="Search">                
-                    <button id = "search" class="btn btn-outline-success my-2 my-sm-0" type="button">Search</button>
-                </form>
-            </nav>
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-        </header>
-        <div id="map"></div>
-    </div>      
-    
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+  <title>Hello, world!</title>
+</head>
 
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=efa21cfcaf4e74e6c0b177d22ecdfdec"></script>
-    <script>
-        var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
-        var options = { //지도를 생성할 때 필요한 기본 옵션
-            center: new kakao.maps.LatLng(33.450701, 126.570667), //지도의 중심좌표.
-            level: 3 //지도의 레벨(확대, 축소 정도)
-        };
+<body>
+  <div class="container">
+    <header>
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">경기지역화폐 지도</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <form class="form-inline my-2 my-lg-0">
+          <nav class="navbar navbar-light bg-light">
+            <span class="navbar-text">
+              검색어
+            </span>
+          </nav>
+          <input id="keyword" class="form-control mr-sm-2" type="search" placeholder="보정동 카페" aria-label="Search">
+          <button id="search" class="btn btn-outline-success my-2 my-sm-0" type="button">Search</button>
+        </form>
+      </nav>
 
-        var map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
-    </script>
-    <script src="./search.js"></script>
-    <script>
-      
-      $(document).ready(function(){
-        let currentMarkers = new Array();
-        $("#search").click(function(){
-          const location = $("#location").val();
-          const storeName = $("#storeName").val();
-          Search(location,storeName,function(data){
-            data.RegionMnyFacltStus[1].row.forEach(function(value,index,array){
-              console.log(value.CMPNM_NM);
+    </header>
+    <div id="map"></div>
+  </div>
+
+
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+    integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+    crossorigin="anonymous"></script>
+  <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=efa21cfcaf4e74e6c0b177d22ecdfdec"></script>
+  <script>
+    var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
+    var options = { //지도를 생성할 때 필요한 기본 옵션
+      center: new kakao.maps.LatLng(33.450701, 126.570667), //지도의 중심좌표.
+      level: 3 //지도의 레벨(확대, 축소 정도)
+    };
+
+    var map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
+  </script>
+  <script src="./search.js"></script>
+  <script src="./map.js"></script>
+  <script>
+
+
+    $(document).ready(function () {
+      let MarkerInfo = {
+        Center: null,
+        Markers: null
+      };
+      function SearchStart() {
+
+        const keyword = $("#keyword").val();
+        ClearMarkers(MarkerInfo.Markers);
+        MarkerInfo.Markers = new Array();
+
+        SearchCategory(keyword, function (data) {
+          stores = data.documents;
+
+          stores.forEach(function (value, index, array) {
+            let location = value.road_address_name.split(' ');
+            location.shift();
+            location = location.join(' ');
+            const storeName = value.place_name.split(' ')[0];
+            Search(location, storeName, function (data) {
+              if (data.RESULT != undefined) {
+                return;
+              }
+              data.RegionMnyFacltStus[1].row.forEach(function (value, index, array) {
+                MarkerInfo.Markers.push(GetMarker(map, value));
+              });
+
+
+              let boundary = SetMarkers(map, MarkerInfo.Markers);
+              SetCenter(map, boundary);
+
             });
-            let center = SetMarkers(map,data.RegionMnyFacltStus[1].row,currentMarkers);
-            
-            map.setCenter(new kakao.maps.LatLng(center.Lat, center.Logt));
-            map.setLevel(4);
-            
+
+
           });
         });
-      });
+      }
+      $("#keyword").keydown(
+        function (event) {
+          if (event.which == '13') {
+            event.preventDefault();
+            SearchStart();
 
-    </script>
-  </body>
+            return false;
+          }
+        });
+      $("#search").click(SearchStart);
+    });
+
+  </script>
+</body>
+
 </html>
