@@ -54,10 +54,22 @@ function GetMarker(map,store){
         removable: iwRemoveable
     });
 
-    // 마커에 클릭이벤트를 등록합니다
-    kakao.maps.event.addListener(marker, 'click', function () {
-        // 마커 위에 인포윈도우를 표시합니다
-        infowindow.open(map, marker);
-    });
+    kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));    
+    kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
+    
     return marker;
+}
+
+// 인포윈도우를 표시하는 클로저를 만드는 함수입니다 
+function makeOverListener(map, marker, infowindow) {
+    return function() {
+        infowindow.open(map, marker);
+    };
+}
+
+// 인포윈도우를 닫는 클로저를 만드는 함수입니다 
+function makeOutListener(infowindow) {
+    return function() {
+        infowindow.close();
+    };
 }

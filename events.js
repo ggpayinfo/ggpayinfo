@@ -23,7 +23,7 @@ $(document).ready(function () {
         stores = data.documents;
         let percentage = 0.0;
         let count = 0;
-        
+        let found = 0;
         $("#progress-bar").css("width", `${percentage}%`);
         $("#progress-bar").text(`${percentage}%`);
 
@@ -37,6 +37,7 @@ $(document).ready(function () {
             if (data.RESULT != undefined) {
               // do nothing
             }else{
+                found++;
                 data.RegionMnyFacltStus[1].row.forEach(function (value, index, array) {
                     MarkerInfo.Markers.push(GetMarker(map, value));
                   });
@@ -48,9 +49,12 @@ $(document).ready(function () {
             percentage = (count / (stores.length)) * 100.0;
             percentage = Math.round(percentage*100)/100;
             $("#progress-bar").css("width", `${percentage}%`);
-            $("#progress-bar").text(`${percentage}%`);
+            $("#progress-bar").text(`${percentage}% (${found} 건을 찾았습니다)`);
             if(percentage == 100.0){
-                SetCenter(map, boundary);
+                if(MarkerInfo.Markers.length > 0){
+                    SetCenter(map, boundary);
+                }                
+                
             }
             
 
