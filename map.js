@@ -2,7 +2,8 @@
 function ClearMarkers(currentMarkers) {
     if (currentMarkers != null) {
         currentMarkers.forEach(function (marker, index, array) {
-            marker.setMap(null);
+            marker.Marker.setMap(null);
+            marker.InfoWindow.close();
         });
     }
 }
@@ -18,14 +19,14 @@ function SetMarkers(map, markers) {
     markers.forEach(function (marker, index, array) {
 
         
-        let lat = parseFloat(marker.getPosition().getLat());
-        let Logt = parseFloat(marker.getPosition().getLng());
+        let lat = parseFloat(marker.Marker.getPosition().getLat());
+        let Logt = parseFloat(marker.Marker.getPosition().getLng());
         if(lat >= maxLat){maxLat = lat};
         if(lat <= minLat){minLat = lat};
 
         if(Logt >= maxLogt){maxLogt = Logt};
         if(Logt <= minLogt){minLogt = Logt};        
-        marker.setMap(map);
+        marker.Marker.setMap(map);
     });
     return {
         SW : new kakao.maps.LatLng(minLat, minLogt),
@@ -50,26 +51,15 @@ function GetMarker(map,store){
 
     // 인포윈도우를 생성합니다
     var infowindow = new kakao.maps.InfoWindow({
-        content: iwContent,
-        removable: iwRemoveable
+        content : iwContent,
+        removable : iwRemoveable
     });
 
-    kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));    
-    kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
-    
-    return marker;
-}
+    // 마커에 클릭이벤트를 등록합니다
+    kakao.maps.event.addListener(marker, 'click', function() {
+        // 마커 위에 인포윈도우를 표시합니다
+        infowindow.open(map, marker);  
+    });
 
-// 인포윈도우를 표시하는 클로저를 만드는 함수입니다 
-function makeOverListener(map, marker, infowindow) {
-    return function() {
-        infowindow.open(map, marker);
-    };
-}
-
-// 인포윈도우를 닫는 클로저를 만드는 함수입니다 
-function makeOutListener(infowindow) {
-    return function() {
-        infowindow.close();
-    };
+    return {Marker : marker,InfoWindow : infowindow};
 }

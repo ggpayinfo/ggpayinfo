@@ -2,6 +2,18 @@
 <html lang="en">
 
 <head>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-166790048-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-166790048-1');
+</script>
+  
+
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -10,7 +22,7 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
     integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
   <link rel="stylesheet" type="text/css" href="css/style.css">
-  <title>Hello, world!</title>
+  <title>경기지역화폐 지도</title>
 </head>
 
 <body>
@@ -26,7 +38,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-              <a class="nav-link" href="#" data-toggle="modal" data-target="#exampleModal">About<span class="sr-only">(current)</span></a>
+              <a class="nav-link" href="#" data-toggle="modal" data-target="#AboutModal">About<span class="sr-only">(current)</span></a>
             </li>
 
           </ul>
@@ -53,21 +65,25 @@
     <div id="map"></div>
 
         <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="AboutModal" tabindex="-1" role="dialog" aria-labelledby="AboutModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+            <h5 class="modal-title" id="AboutModalLabel">About</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <div class="modal-body">
-            ...
+            <p>
+              경기도 지역 화폐의 사용을 검색해 줍니다.
+              <br>
+              <img id = "about_img" src="https://docs.google.com/drawings/d/e/2PACX-1vR-NeQhuFWK6QNp5MGuT74sGt9nUHsPFfiZMVRlGeF6XlyB9MCBV2WIBWB-GyY2qsv55-Pvz5JPD430/pub?w=664&h=676">
+              <br>
+              의견 : <a href="mailto:ggpayinfo@gmail.com">ggpayinfo@gmail.com </a>
+            </p>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
           </div>
         </div>
       </div>
