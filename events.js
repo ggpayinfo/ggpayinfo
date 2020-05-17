@@ -14,7 +14,10 @@ $(document).ready(function () {
       Markers: null
     };
     function SearchStart() {
-
+      if(!$("#btnMenu").hasClass("collapsed")){
+        $("#btnMenu").click();
+      }
+      
       const keyword = $("#keyword").val();
       ClearMarkers(MarkerInfo.Markers);
       MarkerInfo.Markers = new Array();
